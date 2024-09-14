@@ -1,0 +1,15 @@
+
+.side{
+  position: relative;
+  height: 100vh; /* Change this to 100vh to fill the viewport height */
+  width: 250px;
+  background-color: red;
+  color: white;
+  position: fixed; /* Make it fixed so it stays in place */
+  top: 0;
+  left: 0;
+}
+.main-content {
+  margin-left: 300px; /* Add margin to the left to make room for the sidebar */
+  padding: 20px; /* Optional: Add padding to the content area */
+}
