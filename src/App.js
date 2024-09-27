@@ -1,44 +1,102 @@
-import React, { useState } from 'react';
-import Navbar from './components/Navbar';
-import Amazon from './components/Amazon';
-import Cart from './components/Cart';
-import './styles/amazon.css';
+import React, { useEffect, useState } from 'react';
+import './App.css'; // Importing CSS for styling
 
 const App = () => {
-    const [show, setShow] = useState(true);
-    const [cart, setCart] = useState([]);
-    const [warning, setWarning] = useState(false);
+  const [Des, setDes] = useState('');
+  const [Amount, setAmount] = useState('');
+  const [Total, setTotal] = useState(0);
+  const [cart, setCart] = useState([]);
+  const [Catagory,setCatagory]=useState('');
 
-    const handleClick = (item) => {
-        const isPresent = cart.some((product) => item.id === product.id);
-        
-        if (isPresent) {
-            setWarning(true);
-            setTimeout(() => {
-                setWarning(false);
-            }, 2000);
-            return;
-        }
-        
-        setCart([...cart, { ...item, amount: 1 }]);
-    };
+  // Handle adding items to the cart
+  const handleClick = () => {
+    setCart([...cart, { Des, Amount: parseFloat(Amount) }]); // Convert Amount to number
+    setAmount(''); // Reset Amount input
+    setDes('');    // Reset Description input
+  };
 
-    const handleChange = (item, delta) => {
-        const updatedCart = cart.map((data) =>
-            data.id === item.id
-                ? { ...data, amount: Math.max(data.amount + delta, 1) }
-                : data
-        );
-        setCart(updatedCart);
-    };
+  // Handle deletion of items
+  const handleDelete = (indexToDelete) => {
+    setCart(cart.filter((m, index) => index !== indexToDelete));
+  };
 
-    return (
-        <React.Fragment>
-            <Navbar size={cart.length} setShow={setShow} />
-            {show ? <Amazon handleClick={handleClick} /> : <Cart cart={cart} setCart={setCart} handleChange={handleChange} />}
-            {warning && <div className='warning'>Item is already added to your cart</div>}
-        </React.Fragment>
-    );
+  // Handle description input
+  const handleDes = (e) => {
+    setDes(e.target.value);
+  };
+
+  // Handle amount input
+  const handleAmount = (e) => {
+    setAmount(e.target.value);
+  };
+
+  // Calculate total whenever the cart changes
+  useEffect(() => {
+    if (cart.length > 0) {
+      const newTotal = cart.reduce((acc, item) => acc + item.Amount, 0); // Sum up Amount values
+      setTotal(newTotal);
+    } else {
+      setTotal(0); // Reset total if cart is empty
+    }
+  }, [cart]);
+
+  return (
+    <div className="container">
+      <div className='navbar'>
+        Finacis App
+      </div>
+
+      <div className="input-box">
+      <label>Description</label>
+        <input
+          type="text"
+          name="Des"
+          value={Des}
+          onChange={handleDes}
+          placeholder="Description"
+        /> <br />
+        <label>Amount</label>
+        <input
+          type="number"
+          name="Amount"
+          value={Amount}
+          onChange={handleAmount}
+          placeholder="Amount"
+        />
+         </div>
+<div className='Button'> <button onClick={handleClick}>ADD</button></div>
+       
+     
+
+      <div>
+        <h3>Total: {Total}</h3>
+      </div>
+
+      <div className="results">
+  <table>
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Amount</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      {cart.map((item, key) => (
+        <tr key={key}>
+          <td>{item.Des}</td>
+          <td>{item.Amount}</td>
+          <td>
+            <button className="delete-btn" onClick={() => handleDelete(key)}>Delete</button>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+    </div>
+  );
 };
 
 export default App;
