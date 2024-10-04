@@ -1,15 +1,66 @@
+.navbar{
+  display: flex;
+  
+  justify-content: center;
+  
+  width: 100%;
+  height: 70px;
+  font-size: 50px;
+  background-color: rgba(7, 106, 211, 0.671);
+}.input-box {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin: 50px 40px;
+  justify-content: center;
+  border: 2px solid;
+}
 
-.side{
-  position: relative;
-  height: 100vh; /* Change this to 100vh to fill the viewport height */
-  width: 250px;
+.input-box input {
+  margin-top: 10px;
+  height: 30px;
+  width: 550px;
+  padding: 5px; /* Add padding for better spacing inside inputs */
+  box-sizing: border-box; /* Ensure padding is included in the width */
+}
+
+button {
+  margin-top: 20px; /* Space between input fields and button */
+  height: 40px;
+  width: 150px;
+  align-self: center; /* Center the button */
+}.results {
+  display: block;
+  margin-top: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+td {
+  text-align: center;
+}
+
+.delete-btn {
   background-color: red;
   color: white;
-  position: fixed; /* Make it fixed so it stays in place */
-  top: 0;
-  left: 0;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
 }
-.main-content {
-  margin-left: 300px; /* Add margin to the left to make room for the sidebar */
-  padding: 20px; /* Optional: Add padding to the content area */
+
+.delete-btn:hover {
+  background-color: darkred;
 }
